@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>refuge.io - welcome</title>
+    <meta name="description" content="refuge project website">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="refuge.css">
+
+    <script src="js/json2.js"></script> 
+    <script src="js/jquery-1.6.4.min.js"></script>
+    <script src="js/bootstrap-scrollspy.js"></script>
+    <script src="js/bootstrap-tabs.js"></script>
+    <script src="js/bootstrap-twipsy.js"></script>
+    <script src="js/bootstrap-popover.js"></script>
+    <script src="js/bootstrap-modal.js"></script>
+    <script src="js/bootstrap-dropdown.js"></script>
+  </head>
+  <body>
+    <div class="topbar" data-scrollspy="scrollspy" >
+      <div class="topbar-inner">
+        <div class="container">
+          <a class="brand" href="#">Refuge project</a>
+          <ul class="nav">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#download">Download</a></li>
+            <li><a href="#about">About</a></li>
+            <li class="dropdown" data-dropdown="dropdown">
+              <a href="#help" class="dropdown-toggle">Help</a>
+              <ul class="dropdown-menu">
+                <li><a
+                  href="https://github.com/refuge/refuge/wiki"
+                  target="_blank">Wiki</a>
+                <li class="divider"></li>
+                <li><a href="#ml">Mailing-List</a></li>
+                <li><a href="#irc">Irc</a></li>
+                <li><a href="http://www.twitter.com/refugeio"
+                  target="_blank">@refugeio</a></li>
+              </ul>
+            </li>
+            <li><a href="#dev">Get involved</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid" style="margin-top: 60px;">
+        <div class="sidebar">
+            <div class="well">
+                {{#post_links}}
+                    <div class="row">
+                    <h3><a href="/post/{{_id}}">{{title}}</a></h3>
+                    <p>On {{date}}.</p>
+                    </div>
+                {{/post_links}}
+            </div>
+        </div>
+        <div class="content">
+                {{#full_posts}}
+                    {{{full}}}
+                {{/full_posts}}
+        </div>
+    </div>
+
+    <footer class="footer">
+    <div class="container">
+      <p class="pull-right">
+      <a href="#">Back to top</a>
+      </p>
+      <p>2011 &copy; The Refuge Project under the 
+      <a href="http://www.apache.org/licenses/LICENSE-2.0"
+        target="_blank">Apache License v2.0</a></p>
+    </div>
+    </footer>
+  </body>
+</html>
