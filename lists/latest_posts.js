@@ -13,6 +13,7 @@ function(head, req) {
             var doc = row.value;
             
             var post_link = {
+                "id": doc._id,
                 "title": doc.title,
                 "date": doc.created_at
             }
@@ -20,10 +21,10 @@ function(head, req) {
             
             var post = doc;
             post.body = Markdown.encode(post.body);
-            full_posts.push({"full": Mustache.to_html(templates.post, post)});
+            full_posts.push({"full": Mustache.to_html(templates.post_body, post)});
         }
         
-        return Mustache.to_html(templates.posts, {
+        return Mustache.to_html(templates.latest_posts_page, {
             "full_posts": full_posts,
             "post_links": post_links
         });
