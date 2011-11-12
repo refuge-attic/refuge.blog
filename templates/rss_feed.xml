@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>Refuge.io Blog</title>
+        <description>Refuge latest news</description>
+        <link>http://refuge.io/blog</link>
+        
+        {{#posts}}
+        <item>
+                <title>{{title}}</title>
+                <description>{{body}}</description>
+                <link>http://refuge.io/blog/post/{{_id}}</link>
+                <guid>{{_id}}</guid>
+                <pubDate>{{created_at}}</pubDate>
+        </item>
+        {{/posts}}
+ 
+</channel>
+</rss>

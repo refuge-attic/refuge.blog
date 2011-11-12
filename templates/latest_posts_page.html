@@ -50,9 +50,10 @@
     <div class="container-fluid" style="margin-top: 60px;">
         <div class="sidebar">
             <div class="well">
+                <p><img src="/img/rss_icon.png" width="16" height="16" /> <a href="/blog/rss">RSS feed</a></p>
                 {{#post_links}}
                     <div class="row" style="margin-left: 5px;">
-                    <h3><a href="/post/{{id}}">{{title}}</a></h3>
+                    <h3><a href="/blog/post/{{id}}">{{title}}</a></h3>
                     <time title="GMT" datetime="{{date}}" />
                     </div>
                 {{/post_links}}
