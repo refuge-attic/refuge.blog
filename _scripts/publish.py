@@ -42,7 +42,6 @@ class Post(FSDoc):
         fid = os.path.join(self.docdir, 'tile')
         if os.path.exists(ftitle):
             title = utils.read_file(ftitle).split("\n")[0].strip()
-            print title
             if title:
                 return slugify(title)
         elif os.path.exists(fid):
@@ -56,6 +55,7 @@ class Post(FSDoc):
     def push(self, db):
         doc = self.doc(db, with_attachments=False, force=True)
         doc['created'] = datetime.utcnow()
+        doc['type'] = "post"
         db.save_doc(value_to_json(doc), force_update=True)
         attachments = doc.get('_attachments') or {}
 
@@ -70,7 +70,6 @@ class Post(FSDoc):
 
 def pushposts(db, path):
     for d in os.listdir(path):
-        print d
         docdir = os.path.join(path, d)
 
         if docdir.startswith('.'):
@@ -79,7 +78,6 @@ def pushposts(db, path):
         if os.path.isdir(docdir):
             doc = Post(docdir, is_ddoc=False)
             doc.push(db)
-
 
 
 def main():
