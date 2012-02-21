@@ -54,7 +54,7 @@ class Post(FSDoc):
 
     def push(self, db):
         doc = self.doc(db, with_attachments=False, force=True)
-        doc['created'] = datetime.utcnow()
+        doc['created_at'] = datetime.utcnow()
         doc['type'] = "post"
         db.save_doc(value_to_json(doc), force_update=True)
         attachments = doc.get('_attachments') or {}
