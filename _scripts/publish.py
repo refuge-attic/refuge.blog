@@ -55,7 +55,8 @@ class Post(FSDoc):
         doc = self.doc(db, with_attachments=False, force=False)
         doc['created_at'] = datetime.utcnow()
         doc['type'] = "post"
-        doc["body"] = doc["body"].replace("%%DOCID%%", self.docid)
+        doc["body"] = doc["body"].replace("%%DOCID%%",
+                self.docid).replace("%%DBNAME%%", db.dbname)
         doc = value_to_json(doc)
         db.save_doc(doc, force_update=True)
         attachments = doc.get('_attachments') or {}
