@@ -48,15 +48,16 @@ class Post(FSDoc):
             docid = utils.read_file(idfile).split("\n")[0].strip()
             if docid:
                 return docid
-        else:
-            return os.path.split(self.docdir)[1]
+        return os.path.split(self.docdir)[1]
 
 
     def push(self, db):
-        doc = self.doc(db, with_attachments=False, force=True)
+        doc = self.doc(db, with_attachments=False, force=False)
         doc['created_at'] = datetime.utcnow()
         doc['type'] = "post"
-        db.save_doc(value_to_json(doc), force_update=True)
+        doc["body"] = doc["body"].replace("%%DOCID%%", self.docid)
+        doc = value_to_json(doc)
+        db.save_doc(doc, force_update=True)
         attachments = doc.get('_attachments') or {}
 
         for name, filepath in self.attachments():
@@ -71,11 +72,7 @@ class Post(FSDoc):
 def pushposts(db, path):
     for d in os.listdir(path):
         docdir = os.path.join(path, d)
-
-        if docdir.startswith('.'):
-            continue
-
-        if os.path.isdir(docdir):
+        if not docdir.startswith('.') and os.path.isdir(docdir):
             doc = Post(docdir, is_ddoc=False)
             doc.push(db)
 
@@ -108,20 +105,18 @@ def main():
     path = os.path.normpath(os.path.join(os.getcwd(), args.path))
     if not os.path.exists(path):
         sys.stderr.write("Error: %r doesn't exists" % args.path)
+        sys.stderr.flush()
         sys.exit(1)
-
-    logging.basicConfig(format=LOG_FMT, datefmt=LOG_DATE_FMT,
-            level=logging.INFO)
-
 
     try:
         # create db
-        db = Database(args.dburl, create=True)
+        db = Database(args.dburl, create=True, wait_tries=1.)
 
         # send posts
-        pushposts(db, args.path)
+        pushposts(db, path)
     except Exception, e:
         sys.stderr.write("Error: %r" % e)
+        sys.stderr.flush()
         sys.exit(1)
 
     sys.exit(0)
