@@ -11,6 +11,7 @@ function(doc, req) {
         var full_post = Mustache.to_html(templates.post_body, post);
         
         return Mustache.to_html(templates.post_page, {
+            "title": post.title,
             "post_body": full_post
         });
     });
